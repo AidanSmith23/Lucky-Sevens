@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <title>Lucky Sevens</title>
+    <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <style>
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon > i {
+        position: absolute;
+        display: block;
+        transform: translate(0, -50%);
+        top: 51px;
+        left: 15px;
+        pointer-events: none;
+        width: 25px;
+        text-align: center;
+        font-style: normal;
+      }
+
+      .input-icon > input {
+        padding-left: 25px;
+        padding-right: 0;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lucky Sevens</h1>
+        <form name="betting" class="needs-validation" onsubmit="return validate();" onreset="resetView();" novalidate>
+
+            <div class="form-row">
+                <div class="form-group col input-icon">
+                    <label for="start">Starting Bet: </label>
+                    <input type='text' pattern='(^\d+?((\.\d{2})?)$)|(^\d+?((\.\d{0})?)$)'/ class="form-control" id="start" min = "0" required style="width:50%" placeholder="0.00">
+                    <i>£</i>
+                    <div class="invalid-feedback">
+                        This is required and must have 0 or 2 decimal places.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row" style="margin-left:0">
+              <li style="list-style-type:none">
+                <input type="radio" name = "playType" id = "instant" checked>
+                <label for="instant"> Instant </label>
+              </li>
+            </div>
+            <div class="form-row" style="margin-left:0">
+              <li style="list-style-type:none">
+                <input type="radio" name = "playType" id = "automatic">
+                <label for="automatic"> Automatic </label>
+              </li>
+            </div>
+            <div class="form-row" style="margin-left:0">
+              <li style="list-style-type:none">
+                <input type="radio" name = "playType" id = "manual">
+                <label for="manual"> Manual </label>
+              </li>
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group col" id = "speedBox" style="display: none">
+                    <label for="speed">Speed: </label>
+                    <input type='number' class="form-control" id="speed" min = "1" value = "1" style="width:50%">
+                    <div class="invalid-feedback">
+                        This is required and must be an integer.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col">
+                    <button type="submit" id="submitButton" class="btn btn-primary">
+                        Play
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col">
+                    <button type="button" id="rollButton" class="btn btn-primary" style = "display:none">
+                        Roll
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-lg-3 col-md">
+            <table id="results" class="table table-striped" style="display: none">
+                <thead>
+                  <tr id="tablehead"> </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span>Starting Bet</span></td>
+                        <td id = "startingBet"></td>
+                    </tr>
+                    <tr>
+                        <td><span>Total rolls before going broke</span></td>
+                        <td id = "totalRolls"></td>
+                    </tr>
+                    <tr>
+                        <td><span>Highest amount won</span></td>
+                        <td id = "highestAmount"></td>
+                    </tr>
+                    <tr>
+                        <td><span>Roll count at highest amount won</span></td>
+                        <td id = "rollCountHigh"></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="chartContainer2" style="height: 250px; width: 50%; display:none" class="col-lg-6 col-md"></div>
+          </div>
+
+          <div class = "row">
+            <div class = "col-lg-3 col-md">
+              <table id="live" class="table table-striped" style="display: none">
+                  <thead>
+                    <td><img id = "dice1" src="images/dice1.png" alt = "Dice 1" style="max-width: 40px"></td>
+                    <td><p style="margin-top:7px">+</p></td>
+                    <td><img id = "dice2" src="images/dice1.png" alt = "Dice 1" style="max-width: 40px"></td>
+                    <td><p style="margin-top:7px">=</p></td>
+                    <td><p style="margin-top:7px" id = "sum">2</p></td>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td colspan="4"><span>Number of rolls</span></td>
+                          <td id = "rolls" colspan="2"></td>
+                      </tr>
+                      <tr>
+                          <td colspan="4"><span>Current winnings</span></td>
+                          <td id = "winnings" colspan="2"></td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+
+          <div id="chartContainer" style="height: 250px; width: 50%;" class="col-lg-6 col-md"></div>
+        </div>
+
+    </div> <!-- end .container -->
+
+
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="luckySevens.js"></script>
+</body>
+</html>
